@@ -2,7 +2,7 @@
 
     # Check if the entry have variable to make redirection
     if(!empty($_GET["redirect"])){
-        $co = new PDO("mysql:host=localhost;dbname=minlynk;charset=utf8", "root", "");
+        $co = new PDO("mysql:host=sql112.epizy.com;dbname=epiz_30297705_minLynk;charset=utf8", "epiz_30297705", "DmsLw8NexD91a");
         $query = $co->prepare("SELECT link FROM urls WHERE shortcut = ?");
         $query->execute(array($_GET["redirect"]));
         $result = $query->fetch();
