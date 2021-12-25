@@ -1,3 +1,3 @@
 # minLynk
 an URL retrecissor with php and tailwindcss. <br>
-You can try it just here : minlynk.rf.gd
+You can try it just <a href="minlynk.rf.gd"> here </a> 
