@@ -94,9 +94,11 @@
    
     <script src="./fontawesome/js/all.js"></script>
     <script>
+        let minLynk = document.getElementById("result");
         let copyButton = document.getElementById("copy");
         copyButton.onclick = () => {
-            alert("tu as clique");
+            navigator.clipboard.writeText(minLynk.value);
+            alert("Copied");
         } 
     </script>
 </body>
