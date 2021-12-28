@@ -36,7 +36,7 @@
                     <input class="bg-black text-white sm:ml-10 px-7 py-3 rounded-full duration-300 hover:cursor-pointer hover:bg-white hover:text-black" type="submit" value="Minify">    
                 </form>
                 <?php 
-                    if (isset($_POST["result"])){
+                    if (!empty($_POST["result"])){
                 ?>
                         <div class="text-white bg-black px-10 relative flex items-center mt-5 h-10 w-full rounded-full">
                             <label class="bg-white h-full px-5 absolute left-0 text-black flex items-center rounded-full">Your mini URL</label>
