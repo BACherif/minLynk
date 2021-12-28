@@ -1,33 +1,35 @@
 <?php
 
-if(!empty($_POST['url'])) {
-    
-    $url = $_POST['url'];
-    if (strlen($url) <= (strlen("http://".$_SERVER['HTTP_HOST']."/minLynk/index.php?redirect=")+6)) {
-        header("location: ./index.php?error=tooShort");
-    }
-    
-    $co = new PDO("mysql:host=localhost;dbname=minlynk;charset=utf8", "root", "");
+    # Check if data have been sent
 
-    # Verify if url already exist in database
-    $query = $co->prepare("SELECT * FROM urls WHERE link = ?");
-    $query->execute(array($url));
-    $row = $query->fetch(); 
-    
-    if(!$row) {
-        # Insert if it's not in
-        $key = "".time();
-        $short = "Y".substr($key, -5);
-        $query2 = $co->prepare("INSERT INTO urls(link, shortcut) VALUES (?,?)");
-        $query2->execute(array($url, $short));        
-    
-    }else {
-        # Get shortcut if it's in
-        $short = $row["shortcut"];  
+    if(!empty($_POST['url'])) {
+        
+        $url = $_POST['url'];
+        if (strlen($url) <= (strlen("http://".$_SERVER['HTTP_HOST']."/minLynk/index.php?redirect=")+6)) {
+            header("location: ./index.php?error=tooShort");
+        }
+        
+        $co = new PDO("mysql:host=localhost;dbname=minlynk;charset=utf8", "root", "");
+
+        # Verify if url already exist in database
+        $query = $co->prepare("SELECT * FROM urls WHERE link = ?");
+        $query->execute(array($url));
+        $row = $query->fetch(); 
+        
+        if(!$row) {
+            # Insert if it's not in
+            $key = "".time();
+            $short = "Y".substr($key, -5);
+            $query2 = $co->prepare("INSERT INTO urls(link, shortcut) VALUES (?,?)");
+            $query2->execute(array($url, $short));        
+        
+        }else {
+            # Get shortcut if it's in
+            $short = $row["shortcut"];  
+        }
+        
+        $final = "http://".$_SERVER['HTTP_HOST']."/minLynk/index.php?redirect=$short";
     }
-    
-    $final = "http://".$_SERVER['HTTP_HOST']."/minLynk/index.php?redirect=$short";
-}
 
 ?>
 
@@ -44,6 +46,7 @@ if(!empty($_POST['url'])) {
         <input type="text" name="result" value="<?php echo $final?>">
     </form>
     <script>
+        // submit form to get the result on index page
         document.getElementById("formResult").submit();
     </script>
 </body>
