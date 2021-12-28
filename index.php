@@ -12,34 +12,34 @@
     }
 
     # Check if data have been sent
-    if(!empty($_POST['url'])) {
+    // if(!empty($_POST['url'])) {
         
-        $url = $_POST['url'];
-        if (strlen($url) <= (strlen("http://".$_SERVER['HTTP_HOST']."/minLynk/index.php?redirect=")+6)) {
-            header("location: ./index.php?error=tooShort");
-        }
+    //     $url = $_POST['url'];
+    //     if (strlen($url) <= (strlen("http://".$_SERVER['HTTP_HOST']."/minLynk/index.php?redirect=")+6)) {
+    //         header("location: ./index.php?error=tooShort");
+    //     }
         
-        $co = new PDO("mysql:host=localhost;dbname=minlynk;charset=utf8", "root", "");
+    //     $co = new PDO("mysql:host=localhost;dbname=minlynk;charset=utf8", "root", "");
 
-        # Verify if url already exist in database
-        $query = $co->prepare("SELECT * FROM urls WHERE link = ?");
-        $query->execute(array($url));
-        $row = $query->fetch(); 
+    //     # Verify if url already exist in database
+    //     $query = $co->prepare("SELECT * FROM urls WHERE link = ?");
+    //     $query->execute(array($url));
+    //     $row = $query->fetch(); 
         
-        if(!$row) {
-            # Insert if it's not in
-            $key = "".time();
-            $short = "Y".substr($key, -5);
-            $query2 = $co->prepare("INSERT INTO urls(link, shortcut) VALUES (?,?)");
-            $query2->execute(array($url, $short));        
+    //     if(!$row) {
+    //         # Insert if it's not in
+    //         $key = "".time();
+    //         $short = "Y".substr($key, -5);
+    //         $query2 = $co->prepare("INSERT INTO urls(link, shortcut) VALUES (?,?)");
+    //         $query2->execute(array($url, $short));        
         
-        }else {
-            # Get shortcut if it's in
-            $short = $row["shortcut"];  
-        }
+    //     }else {
+    //         # Get shortcut if it's in
+    //         $short = $row["shortcut"];  
+    //     }
         
-        $final = "http://".$_SERVER['HTTP_HOST']."/minLynk/index.php?redirect=$short";
-    }
+    //     $final = "http://".$_SERVER['HTTP_HOST']."/minLynk/index.php?redirect=$short";
+    // }
 
 ?>
 
@@ -59,7 +59,7 @@
         <div class="flex flex-col items-center h-screen w-screen sm:w-full sm:h-4/5 lg:w-4/5 xl:w-3/5 md:w-full lg:h-2/5 md:h-3/5 backdrop-blur-md backdrop-brightness-150 bg-white/30 justify-center">
             <h1 class="text-white text-3xl mb-6">URL too much long ? Shrink it !</h1>
             <div class="flex flex-col w-4/5 h-2/5 justify-around">
-                <form action="#" method="POST" class="w-full h-2/5 flex items-center justify-around sm:justify-between flex-col sm:flex-row">
+                <form action="./minify.php" method="POST" class="w-full h-2/5 flex items-center justify-around sm:justify-between flex-col sm:flex-row">
                     <div class="w-full sm:w-4/5 relative">
                         <label class="hidden sm:inline absolute left-0 bg-black text-white p-3 px-7 rounded-full" for="url">URL</label>
                         <input id="url" class="w-full outline-none px-9 sm:pl-28 sm:pr-10 h-12 rounded-full" name="url" type="text" required placeholder="Paste your URL here">
@@ -67,11 +67,11 @@
                     <input class="bg-black text-white sm:ml-10 px-7 py-3 rounded-full duration-300 hover:cursor-pointer hover:bg-white hover:text-black" type="submit" value="Minify">    
                 </form>
                 <?php 
-                    if (isset($final)){
+                    if (isset($_POST["result"])){
                 ?>
                         <div class="text-white bg-black px-10 relative flex items-center mt-5 h-10 w-full rounded-full">
                             <label class="bg-white h-full px-5 absolute left-0 text-black flex items-center rounded-full">Your mini URL</label>
-                            <input class="bg-transparent w-full h-full pl-40" name="result" id="result" type="text" disabled value="<?php echo $final ?>"></span>
+                            <input class="bg-transparent w-full h-full pl-40" name="result" id="result" type="text" disabled value="<?php echo $_POST["result"] ?>"></span>
                             <button class="bg-white h-full px-3 absolute right-0 text-black rounded-full" id="copy"><i class="fas fa-copy"></i></button>
                         </div>
                 <?php        
