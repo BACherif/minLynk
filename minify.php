@@ -41,14 +41,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<body style="display: flex; align-items: center; justify-content: center; width: 100vw; height: 100vh; background-color: black">
+<body style="display: flex; align-items: center; justify-content: center; width: 100vw; height: 100vh; background-color: black; margin: 0; padding: 0">
     <form action="index.php" method="post" id="formResult" style="display: none;">
         <input type="text" name="result" value="<?php echo !empty($final)? $final:"" ?>">
     </form>
     <video src="./loading.mp4" muted autoplay loop></video>
     <script>
         // submit form to get the result on index page
-        document.getElementById("formResult").submit();
+        setTimeout(()=>{
+            document.getElementById("formResult").submit();
+        }, 3000);
     </script>
 </body>
 </html>
