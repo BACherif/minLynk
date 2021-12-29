@@ -48,9 +48,10 @@
     <video src="./loading.mp4" muted autoplay loop></video>
     <script>
         // submit form to get the result on index page
-        setTimeout(()=>{
+        document.onload = setTimeout(()=>{
             document.getElementById("formResult").submit();
-        }, 3000);
+        }, 2500);
+        
     </script>
 </body>
 </html>
